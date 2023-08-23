@@ -111,7 +111,7 @@ class ChecklistViewController: UITableViewController {
      tableView(_:cellForRowAt:)
      tableView(_:didSelectRowAt:),"
      
-     are three different names.
+     these are three different names.
      
     */
 }
