@@ -13,6 +13,7 @@
 		383170982A948DAE0051E39B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383170962A948DAE0051E39B /* Main.storyboard */; };
 		3831709A2A948DAF0051E39B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383170992A948DAF0051E39B /* Assets.xcassets */; };
 		3831709D2A948DAF0051E39B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3831709B2A948DAF0051E39B /* LaunchScreen.storyboard */; };
+		383170C52A966E0C0051E39B /* Checklistitem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383170C42A966E0C0051E39B /* Checklistitem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		383170992A948DAF0051E39B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3831709C2A948DAF0051E39B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3831709E2A948DAF0051E39B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		383170C42A966E0C0051E39B /* Checklistitem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checklistitem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				383170992A948DAF0051E39B /* Assets.xcassets */,
 				3831709B2A948DAF0051E39B /* LaunchScreen.storyboard */,
 				3831709E2A948DAF0051E39B /* Info.plist */,
+				383170C42A966E0C0051E39B /* Checklistitem.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 				383170952A948DAE0051E39B /* ChecklistViewController.swift in Sources */,
 				383170912A948DAE0051E39B /* AppDelegate.swift in Sources */,
 				383170932A948DAE0051E39B /* SceneDelegate.swift in Sources */,
+				383170C52A966E0C0051E39B /* Checklistitem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
