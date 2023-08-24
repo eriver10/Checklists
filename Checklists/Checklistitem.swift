@@ -22,4 +22,7 @@ class ChecklistItem {
  
  This answers my earlier question on instance variables.
  
+
+ 
+ 
  */

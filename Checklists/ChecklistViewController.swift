@@ -42,8 +42,10 @@ class ChecklistViewController: UITableViewController {
         let item5 = ChecklistItem()
         item5.text = "Eat ice cream"
         items.append(item5)
-
-
+        
+        //Code added to enable large titles in display. It looks like something you might see in a config file.
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
     }
     
     
@@ -124,21 +126,25 @@ class ChecklistViewController: UITableViewController {
         
     }
     
-    
     /*
-    func configureCheckmark(
-        for cell: UITableViewCell,
-        at indexPath: IndexPath
-    ){
+     This method provide a swipe-to-delete function.
+     As, before it uses a built in animation, however,
+     this time we are removing instead of appending the row and array.
         
-        let item = items[indexPath.row]
-        if item.checked {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
+     */
+    
+    override func tableView(
+      _ tableView: UITableView,
+      commit editingStyle: UITableViewCell.EditingStyle,
+      forRowAt indexPath: IndexPath
+    ){
+    // 1
+      items.remove(at: indexPath.row)
+    // 2
+      let indexPaths = [indexPath]
+      tableView.deleteRows(at: indexPaths, with: .automatic)
     }
-    */
+    //Note: the call items.remove(at:) doesn't just remove the ChecklistItem from the array but also permanently destroys the object, a form of memory management.
     
     func configureCheckmark(
       for cell: UITableViewCell,
@@ -161,10 +167,36 @@ class ChecklistViewController: UITableViewController {
         
     }
     
-    
-    
+    // MARK: - Actions
+    @IBAction func addItem() {
+        
+        //This const is collecting the array's size
+        //Arrays begin at zero, nearly everything in computers actually.
+        let newRowIndex = items.count
+        //This const instantiates, or creates, an new object, based on our newest class.
+        let item = ChecklistItem()
+        
+        //This familiar territory, we are piping a string into item as text.
+        //Or, you could say we are sending it up for display.
+          item.text = "I am a new row"
+          items.append(item)//Then, adding it to the end(appending the array).
+          
+        //These lines call up and create a new row then create an array to hold one or more rows along with activating an animation.
+        
+          let indexPath = IndexPath(row: newRowIndex, section: 0)
+          let indexPaths = [indexPath]
+        
+          tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        /*
+         To quote the book:
+        
+        "1. Created a new ChecklistItem object.
+         2. Added it to the data model.
+         3. Inserted a new row for it in the table view."
+        */
+        
+        
+    }
     
 }
-
-
-
