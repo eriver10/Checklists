@@ -8,6 +8,30 @@
 
 import UIKit
 
+//Ok, this is new and outside of the class.
+
+//This code establishes AddItemViewControllerDelegate protocol
+protocol AddItemViewControllerDelegate: AnyObject {
+  func addItemViewControllerDidCancel(
+    _ controller: AddItemViewController)
+  func addItemViewController(
+    _ controller: AddItemViewController,
+    didFinishAdding item: ChecklistItem
+  )
+}
+
+
+
+/*
+ The book says to think of the delegate protocol a contract between screen b an the Add Item View Controller.
+ 
+ Note: again communication themed, protocol-the rules of how to communcate.
+*/
+
+
+
+
+
 
 
 /*
@@ -19,8 +43,16 @@ class AddItemViewController: UITableViewController,
                              UITextFieldDelegate{
  
  
- 
+    /*
+     This was added after the delegate protocols outside this class was written. It has to be a hook to the protocols.
+     
+     Note: the keyword weak and the question mark.
+     
+     weak describes the type of relationship and the question mark means optional. Was wondering about that.
 
+    */
+    
+    weak var delegate: AddItemViewControllerDelegate?
     
     override func viewDidLoad() {
     super.viewDidLoad()
