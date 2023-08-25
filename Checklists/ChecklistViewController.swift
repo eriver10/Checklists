@@ -10,21 +10,20 @@
 import UIKit
 
 
-
-class ChecklistViewController: UITableViewController {
-    
-    
-
+//Note: added this delegate to the class
+class ChecklistViewController: UITableViewController,                 AddItemViewControllerDelegate {
+        
     var items = [ChecklistItem]()
-    
     //NOTE: the syntax for array creation in swift.
-    
-    
+
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
+        //Code added to enable large titles in display. It looks like something you might see in a config file.
+        navigationController?.navigationBar.prefersLargeTitles = true
         
-        
+        //These are most likely temp place holders
         let item1 = ChecklistItem()
         item1.text = "Walk the dog"
         items.append(item1)
@@ -40,63 +39,42 @@ class ChecklistViewController: UITableViewController {
         item4.text = "Soccer practice"
         items.append(item4)
         let item5 = ChecklistItem()
-        item5.text = "Eat ice cream"
+        item5.text = "Eat Pizza"
         items.append(item5)
-        
-        //Code added to enable large titles in display. It looks like something you might see in a config file.
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
     }
-    
-    
-    
-    override func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
 
-        return items.count
+    // MARK: - Navigation
+    override func prepare(
+      for segue: UIStoryboardSegue,
+      sender: Any?
+    ){
+    
+        // 1
+        if segue.identifier == "AddItem" {
+        // 2
+        let controller = segue.destination as! AddItemViewController
+        // 3
+        controller.delegate = self
+        }
+        
     }
     
+    // MARK: - Table View Data Source
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return items.count
+    }
     
-    override func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
-        
-        
-        
-        /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) ->
+      UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: "ChecklistItem",
-            for: indexPath)
-        
-        
-         let item = items[indexPath.row]
-        
-              
-        let label = cell.viewWithTag(1000) as! UILabel
-        
-        label.text = item.text
-              
-        configureCheckmark(for: cell, at: indexPath)
-                
-        */
-        
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: "ChecklistItem",
-            for: indexPath)
-        
-          let item = items[indexPath.row]
-        
-          configureText(for: cell, with: item)
-          configureCheckmark(for: cell, with: item)
-        
+          withIdentifier: "ChecklistItem",
+          for: indexPath)
+
+        let item = items[indexPath.row]
+        configureText(for: cell, with: item)
+        configureCheckmark(for: cell, with: item)
         return cell
-        
-    }
-    
-    
+      }
     
     override func tableView(
         _ tableView: UITableView,
@@ -133,18 +111,24 @@ class ChecklistViewController: UITableViewController {
         
      */
     
-    override func tableView(
-      _ tableView: UITableView,
-      commit editingStyle: UITableViewCell.EditingStyle,
-      forRowAt indexPath: IndexPath
-    ){
-    // 1
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
       items.remove(at: indexPath.row)
-    // 2
+
       let indexPaths = [indexPath]
       tableView.deleteRows(at: indexPaths, with: .automatic)
     }
-    //Note: the call items.remove(at:) doesn't just remove the ChecklistItem from the array but also permanently destroys the object, a form of memory management.
+    
+    
+    
+    func configureText(
+      for cell: UITableViewCell,
+      with item: ChecklistItem
+    ){
+        
+        let label = cell.viewWithTag(1000) as! UILabel
+        label.text = item.text
+        
+    }
     
     func configureCheckmark(
       for cell: UITableViewCell,
@@ -157,37 +141,34 @@ class ChecklistViewController: UITableViewController {
       }
     }
     
-    func configureText(
-      for cell: UITableViewCell,
-      with item: ChecklistItem
+    // MARK: -Item Control Delegates, added by fix then added code
+    func addItemViewControllerDidCancel(
+      _ controller: AddItemViewController
     ){
-        
-        let label = cell.viewWithTag(1000) as! UILabel
-        label.text = item.text
-        
+      navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - Actions
-    @IBAction func addItem() {
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
         
-        //This const is collecting the array's size
-        //Arrays begin at zero, nearly everything in computers actually.
-        let newRowIndex = items.count
-        //This const instantiates, or creates, an new object, based on our newest class.
-        let item = ChecklistItem()
+      let newRowIndex = items.count
+      items.append(item)
+
+      let indexPath = IndexPath(row: newRowIndex, section: 0)
+      let indexPaths = [indexPath]
         
-        //This familiar territory, we are piping a string into item as text.
-        //Or, you could say we are sending it up for display.
-          item.text = "I am a new row"
-          items.append(item)//Then, adding it to the end(appending the array).
-          
-        //These lines call up and create a new row then create an array to hold one or more rows along with activating an animation.
-        
-          let indexPath = IndexPath(row: newRowIndex, section: 0)
-          let indexPaths = [indexPath]
-        
-          tableView.insertRows(at: indexPaths, with: .automatic)
-        
+      tableView.insertRows(at: indexPaths, with: .automatic)
+
+      navigationController?.popViewController(animated: true)
+    }
+  }
+    
+    
+  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
+    
+
+
         /*
          To quote the book:
         
@@ -197,6 +178,6 @@ class ChecklistViewController: UITableViewController {
         */
         
         
-    }
+ 
     
-}
+

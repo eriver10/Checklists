@@ -17,14 +17,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="iNa-TR-nDF">
-                                <rect key="frame" x="0.0" y="50" width="375" height="22.5"/>
+                                <rect key="frame" x="0.0" y="50" width="375" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iNa-TR-nDF" id="DAX-Au-oDJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="335" height="22.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="335" height="22"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Fl-Go-S02">
-                                            <rect key="frame" x="20" y="2" width="311" height="18.5"/>
+                                            <rect key="frame" x="20" y="2" width="311" height="18"/>
                                             <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -47,7 +47,7 @@
                     <navigationItem key="navigationItem" title="Checklists" largeTitleDisplayMode="never" id="blq-IV-Lg8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Bd6-8r-Guv">
                             <connections>
-                                <segue destination="xxI-g7-dhw" kind="show" id="d6U-AT-cPl"/>
+                                <segue destination="xxI-g7-dhw" kind="show" identifier="AddItem" id="d6U-AT-cPl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
