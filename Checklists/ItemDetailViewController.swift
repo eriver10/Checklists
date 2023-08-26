@@ -1,5 +1,6 @@
 //
-//  AddItemViewController.swift
+//  ItemDetailViewController.swift
+//  formally (AddItemViewController.swift)
 //  Checklists
 //
 //  Created by Grey on 8/24/23.
@@ -11,14 +12,20 @@ import UIKit
 //Ok, this is new and outside of the class.
 
 //This code establishes AddItemViewControllerDelegate protocol
-protocol AddItemViewControllerDelegate: AnyObject {
-  
-    func addItemViewControllerDidCancel(
-    _ controller: AddItemViewController)
-    func addItemViewController(
-    _ controller: AddItemViewController,
-    didFinishAdding item: ChecklistItem
-  )
+protocol ItemDetailViewControllerDelegate: AnyObject {
+    
+    func itemDetailViewControllerDidCancel(
+        _ controller: ItemDetailViewController
+    )
+    func itemDetailViewController(
+        _ controller: ItemDetailViewController,
+        didFinishAdding item: ChecklistItem
+    )
+    func itemDetailViewController(
+       _ controller: ItemDetailViewController,
+       didFinishEditing item: ChecklistItem
+     )
+    
 }
 
 
@@ -32,8 +39,14 @@ protocol AddItemViewControllerDelegate: AnyObject {
 
 
 
-class AddItemViewController: UITableViewController,
-                             UITextFieldDelegate{
+class ItemDetailViewController: UITableViewController,                            UITextFieldDelegate{
+    
+    //Testing
+    /*
+    @IBOutlet weak var textField: UITextField!
+    */
+    
+    var itemToEdit: ChecklistItem?
     
     
     /*
@@ -49,28 +62,53 @@ class AddItemViewController: UITableViewController,
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
-    weak var delegate: AddItemViewControllerDelegate?
+    weak var delegate: ItemDetailViewControllerDelegate?
     
     
     //Actions:
     @IBAction func cancel() {
-        delegate?.addItemViewControllerDidCancel(self)
+        delegate?.itemDetailViewControllerDidCancel(self)
     }
-    
+
+    /*
     @IBAction func done() {
         let item = ChecklistItem()
         item.text = textField.text!
-        delegate?.addItemViewController(self, didFinishAdding: item)
+        delegate?.itemDetailViewController(self, didFinishAdding: item)
     }
+    */
+     
+    //Changing above action to add some logic and call new done delegates
+    //didFinishAdding and didFinishEditing.
     
-    
-
-    
-    
-    
+    @IBAction func done() {
+      
+        if let item = itemToEdit {
+            item.text = textField.text!
+            delegate?.itemDetailViewController(self, didFinishEditing: item)
+      } else {
+          let item = ChecklistItem()
+          item.text = textField.text!
+          delegate?.itemDetailViewController(self, didFinishAdding: item)
+      }
+        
+    }
+     
+     
+        
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         navigationItem.largeTitleDisplayMode = .never
+        
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textField.text = item.text
+            //Added this line because done is disabled by default.
+            doneBarButton.isEnabled = true
+            
+          }
     }
     
     // MARK: - Actions
@@ -104,7 +142,11 @@ class AddItemViewController: UITableViewController,
         textField.becomeFirstResponder()
     }
     
-    
+    //For test only
+    /*
+    @IBAction func doneBarButton(_ sender: Any) {
+    }
+    */
     
     
     //Quote from book,"This is one of the UITextField delegate methods. It is invoked every time the user changes the text, whether by tapping on the keyboard or via cut/paste.
@@ -127,3 +169,11 @@ class AddItemViewController: UITableViewController,
     
     
 }
+
+//Error:
+
+/*
+ Thread 1: "-[Checklists.ItemDetailViewController doneBarButton:]: unrecognized selector sent to instance 0x7fc99b026680"
+ 
+ */
+

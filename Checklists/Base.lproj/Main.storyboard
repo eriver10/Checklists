@@ -16,15 +16,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="iNa-TR-nDF">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="iNa-TR-nDF">
                                 <rect key="frame" x="0.0" y="50" width="375" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iNa-TR-nDF" id="DAX-Au-oDJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="335" height="22"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="316.5" height="22"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Fl-Go-S02">
-                                            <rect key="frame" x="20" y="2" width="311" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jwt-Ba-Yf4">
+                                            <rect key="frame" x="10" y="-8" width="24" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <string key="text" base64-UTF8="YES">
+FuKImg
+</string>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Fl-Go-S02">
+                                            <rect key="frame" x="74" y="-4" width="224" height="27"/>
                                             <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -37,6 +47,9 @@
                                         <constraint firstItem="8Fl-Go-S02" firstAttribute="leading" secondItem="DAX-Au-oDJ" secondAttribute="leadingMargin" constant="4" id="cAq-5l-jGf"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="xxI-g7-dhw" kind="show" identifier="EditItem" trigger="accessoryAction" id="uXP-sd-TbZ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -59,7 +72,7 @@
         <!--Add Item-->
         <scene sceneID="cUv-ci-49P">
             <objects>
-                <tableViewController id="xxI-g7-dhw" customClass="AddItemViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="xxI-g7-dhw" customClass="ItemDetailViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="OZr-zc-W2I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,18 +111,18 @@
                     <navigationItem key="navigationItem" title="Add Item" largeTitleDisplayMode="never" id="Who-G6-hzX">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="QB1-i3-lWS">
                             <connections>
-                                <action selector="cancel" destination="xxI-g7-dhw" id="Uyy-h3-3Da"/>
+                                <action selector="cancel" destination="xxI-g7-dhw" id="QAd-3W-c88"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="pHy-zR-BVK">
                             <connections>
-                                <action selector="doneBarButton:" destination="xxI-g7-dhw" id="tHc-hf-YJD"/>
+                                <action selector="done" destination="xxI-g7-dhw" id="ZQQ-Jm-YUL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="doneBarButton" destination="pHy-zR-BVK" id="pbZ-jK-XMp"/>
-                        <outlet property="textField" destination="dkQ-nc-ebj" id="IG2-xh-7Ca"/>
+                        <outlet property="textField" destination="dkQ-nc-ebj" id="snh-dO-wp7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4NZ-3O-yfb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -135,6 +148,9 @@
             <point key="canvasLocation" x="-207.19999999999999" y="-64.31784107946028"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="uXP-sd-TbZ"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
