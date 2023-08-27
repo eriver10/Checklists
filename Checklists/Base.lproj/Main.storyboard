@@ -127,7 +127,7 @@ FuKImg
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4NZ-3O-yfb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1496.8" y="-47.226386806596707"/>
+            <point key="canvasLocation" x="1510" y="-64"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="K1j-HN-keV">
