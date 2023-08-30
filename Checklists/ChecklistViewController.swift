@@ -47,6 +47,12 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
         let item5 = ChecklistItem()
         item5.text = "Eat Pizza"
         items.append(item5)
+        
+        //Most likely temporary just to show and test if our documents are pointing to correct directory. 
+        print("Documents folder is \(documentsDirectory())")
+        print("Data file path is \(dataFilePath())")
+        //Looking good showing paths in console.
+        
     }
 
     // MARK: - Table View Data Source
@@ -70,17 +76,7 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       if let cell = tableView.cellForRow(at: indexPath) {
         
-        /*
-        if let cell = tableView.cellForRow(at: indexPath) {
-            
-            let item = items[indexPath.row]
-            item.checked.toggle()
-            //calling toggle method where could that be?
-            
-            configureCheckmark(for: cell, at: indexPath)
-        }
-        
-        */
+       
         
           let item = items[indexPath.row]
           item.checked.toggle()
@@ -91,12 +87,7 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
     
     
     
-    /*
-     This method provide a swipe-to-delete function.
-     As, before it uses a built in animation, however,
-     this time we are removing instead of appending the row and array.
-        
-     */
+    
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
       items.remove(at: indexPath.row)
@@ -128,30 +119,7 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    func configureCheckmark(
-      for cell: UITableViewCell,
-      with item: ChecklistItem
-    ){
-    if item.checked {
-        cell.accessoryType = .checkmark
-      } else {
-        cell.accessoryType = .none
-      }
-    }
-    */
-     //Changed checkmark location and added a custom check, Now changing this code to:
+
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
       let label = cell.viewWithTag(1001) as! UILabel
       if item.checked {
@@ -196,23 +164,33 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
       }
       navigationController?.popViewController(animated: true)
     }
+    
+    /*
+    New functions bellow: for chap 15, adding a way to access this apps sandboxed file and save our checklist data to it.
+    */
+    
+    //This function points to a URL or URL as an address to save to.
+    func documentsDirectory() -> URL {
+      let paths = FileManager.default.urls(
+        for: .documentDirectory,
+        in: .userDomainMask)
+      return paths[0]
+    }
+    //This function calls the documentsDirectory() to get the address and inserts a file, Checklists.plist, to hold our information
+        
+    func dataFilePath() -> URL {
+      return
+    documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+    
+    //
+
   }
     
     
 
 
-        /*
-         To quote the book:
-        
-        "1. Created a new ChecklistItem object.
-         2. Added it to the data model.
-         3. Inserted a new row for it in the table view."
-        */
-        
-        
-    
-    //...............................
-    
+
     
     
     
@@ -236,18 +214,6 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
 
     
 
-     /*
-     //Is this my error??
-      
-      
-    // MARK: -Item Control Delegates, added by fix then added code
-    func itemDetailViewControllerDidCancel(
-      _ controller: ItemDetailViewController
-    ){
-      navigationController?.popViewController(animated: true)
-    }
-    */
-    
 
     
     
