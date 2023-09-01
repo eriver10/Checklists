@@ -29,6 +29,12 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
         //Code added to enable large titles in display. It looks like something you might see in a config file.
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        loadChecklistItems()
+        
+        /*
+         As predicted these were just place holders, Now the function loadChecklistItems() will retrieve user saved inputs.
+         
+        
         //These are most likely temp place holders
         let item1 = ChecklistItem()
         item1.text = "Walk the dog"
@@ -48,6 +54,10 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
         item5.text = "Eat Pizza"
         items.append(item5)
         
+         */
+         
+         
+         
         //Most likely temporary just to show and test if our documents are pointing to correct directory. 
         print("Documents folder is \(documentsDirectory())")
         print("Data file path is \(dataFilePath())")
@@ -83,6 +93,9 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
           configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        //Note: the call to this new function to handle saving to file. Here within the check or not check function.
+        saveChecklistItems()
       }
     
     
@@ -94,6 +107,9 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
 
       let indexPaths = [indexPath]
       tableView.deleteRows(at: indexPaths, with: .automatic)
+        
+        //Note: the call to this new function to handle saving to file. Here within our swipe to delete.
+        saveChecklistItems()
     }
     
     
@@ -149,6 +165,9 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
       tableView.insertRows(at: indexPaths, with: .automatic)
 
       navigationController?.popViewController(animated: true)
+        
+        //Note: the call to this new function to handle saving to file.
+        saveChecklistItems()
     }
 
     
@@ -163,6 +182,8 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
         }
       }
       navigationController?.popViewController(animated: true)
+        
+        saveChecklistItems()
     }
     
     /*
@@ -183,8 +204,68 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
     documentsDirectory().appendingPathComponent("Checklists.plist")
     }
     
-    //
-
+    /*
+     .plist stands for Property List. It is an XML file format. Similar to a config file, it a stores a Property list of settings and their values.
+     */
+    
+    
+    
+    /*
+    Note: this functioned errored with:
+     
+     Class 'PropertyListEncoder' requires that 'ChecklistItem' conform to 'Encodable'
+    
+     Moving forward, I think this may resolve itself with next code...
+     */
+     
+    
+    /*
+     Question Answered. The book says says the error occurs because, "... any object encoded (or decoded) by a PropertyListEncoder — or for that matter, any of the other encoders/decoders compatible with the Codable protocol — must support the Codable protocol, and ChecklistItem does not."
+     
+     Fixing this Now.
+     
+     */
+    
+     
+    func saveChecklistItems() {
+      // 1 This called function encodes, or converts, our array data, the list items, into text the file can use to, thus, save it to the hardware.
+      let encoder = PropertyListEncoder()
+      // 2 Looks like a try/catch to catch an error, most likely if empty or data is in wrong format.
+      do {
+    // 3
+        let data = try encoder.encode(items)
+        // 4
+        try data.write(
+          to: dataFilePath(),
+          options: Data.WritingOptions.atomic)
+        // 5
+    } catch { // 6
+        //Note: this will print ot the console not in a text field.
+        print("Error encoding item array: \(error.localizedDescription)")
+    
+      }
+        
+    }
+    
+    //Note: the do/catch statements. Are they the same as try/catch??
+    
+    func loadChecklistItems() {
+      // 1
+      let path = dataFilePath()
+      // 2
+      if let data = try? Data(contentsOf: path) {
+    // 3
+        let decoder = PropertyListDecoder()
+        do {
+    // 4
+          items = try decoder.decode(
+            [ChecklistItem].self,
+            from: data)
+        } catch {
+          print("Error decoding item array: \(error.localizedDescription)")
+    } }
+    }
+    
   }
     
     

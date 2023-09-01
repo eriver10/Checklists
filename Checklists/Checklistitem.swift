@@ -7,20 +7,12 @@
 
 import Foundation
 
-/*
-class ChecklistItem {
-*/
- 
-/*
-changes above in order to fix an error:
-Referencing instance method 'firstIndex(of:)' on 'Collection' requires that 'ChecklistItem' conform to 'Equatable'
-*/
- class ChecklistItem: NSObject {
+//Add in : NSObject, Codable
+
+//Codable, allows us to change the listed items to be saved into a form that can be saved and read from, when sent to file.
+
+ class ChecklistItem: NSObject, Codable{
   var text = ""
   var checked = false
 }
 
-/*
- NSObject is the root class in Objective-C. Swift can borrow from it to add additional  functionality to Swift objects.
- 
- */
