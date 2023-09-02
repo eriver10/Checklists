@@ -18,16 +18,25 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
         
     var items = [ChecklistItem]()
     //NOTE: the syntax for array creation in swift.
-
     
+    /*
+     The book says this is an instance variable. It is quite unusual to me does the exclamation mean not. Also note, Checklist! is capitalized: is this calling a class?
+        
+    */
+    
+    
+    var checklist: Checklist!
     
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        //Code added to enable large titles in display. It looks like something you might see in a config file.
+        /*
+        //Moving to AllListsViewController
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        */
         
         loadChecklistItems()
         
@@ -62,6 +71,13 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
         print("Documents folder is \(documentsDirectory())")
         print("Data file path is \(dataFilePath())")
         //Looking good showing paths in console.
+        
+        
+        // Disable large titles for this view controller
+        navigationItem.largeTitleDisplayMode = .never
+        
+        //This pipes in text from the name field into our title variable to set the checklist's name.
+        title = checklist.name
         
     }
 
