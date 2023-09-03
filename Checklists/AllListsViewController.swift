@@ -7,21 +7,16 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+//Adding UINavigationControllerDelegate to relay the user's key presses.
+
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     let cellIdentifier = "ChecklistCell"
+    var dataModel: DataModel!
     
     
-    /*
-    var lists = [Checklist]()
-    //Note: Above is short hand for:
-    //var lists = Array<Checklist>()
-    */
-     
-     var dataModel: DataModel!
+    //test over this is working fine now!!!
     
-    
-    //test
     override func viewDidLoad() {
       super.viewDidLoad()
       navigationController?.navigationBar.prefersLargeTitles = true
@@ -32,17 +27,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
       //loadChecklists()
     }
     
-    override func tableView(_ tableView: UITableView,                              numberOfRowsInSection section: Int) -> Int {
-        
-        /*
-         //Notice, changing the default number of items for an adaptable command that returns what ever the size of the array is.
-         return 3
-         */
-        
-        return dataModel.lists.count
-        
-        
-    }
+
     
     
     //MARK: -Navigation
@@ -64,6 +49,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     
+            //tableView Section\\
+    
+    override func tableView(_ tableView: UITableView,                              numberOfRowsInSection section: Int) -> Int {
+              
+        return dataModel.lists.count
+        
+        
+    }
+    
     override func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
@@ -81,7 +75,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         return cell
     }
     
-    //This function add functionality to our newly connected views. It should initiate by user press on a row, hence, didSelectRowAt.
+
     override func tableView(
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
@@ -89,6 +83,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist",
                      sender: checklist)
+        
+        
+        //Setting up user defaults. The goal is to save the last list the user access in order to serve it up when the app opens again.
+        UserDefaults.standard.set(
+            indexPath.row,
+            forKey: "ChecklistIndex")
+        
+        /*
+        Was introduced to the Dictionary concept when creating a morse code app. This looks similar in that is has an key-value pairs.
+         
+         Not unlike and array, calling for the key retrieves the value.
+         
+         
+        */
     }
     
     override func tableView(
@@ -119,79 +127,19 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     
-    
-    
-    //override................................
-    
-    /*
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        //This, "registers our cell identifier with the table view so that the table view knows which cell class should be used to create a new table view cell instance when a dequeue request comes in with that cell identifier." quoted from book.
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier:
-                            cellIdentifier)
-        
-        //Enabling large titles
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        
-        //Adding some placeholders for our list of checklists.
-        var list = Checklist(name: "Hurricane prep")
-        lists.append(list)
-        list = Checklist(name: "Groceries")
-        lists.append(list)
-        list = Checklist(name: "Cool Apps")
-        lists.append(list)
-        list = Checklist(name: "To Do")
-        lists.append(list)
-        
-        //Temporary Add placeholder item data
-        for list in lists {
-            let item = ChecklistItem()
-            item.text = "Item for \(list.name)"
-            list.items.append(item)
-            //Note: Swifts way of working a for loop.
-            
-        }
-        
+    //After collecting user behavior, and at the next startup, this function will invoke/display the recored defaults, or in-other-words, show the last list used.
+    override func viewDidAppear(_ animated: Bool) {
+      super.viewDidAppear(animated)
+      navigationController?.delegate = self
+      let index = UserDefaults.standard.integer(
+        forKey: "ChecklistIndex")
+      if index != -1 {
+        let checklist = dataModel.lists[index]
+        performSegue(
+          withIdentifier: "ShowChecklist",
+          sender: checklist)
+      }
     }
-    
- */
-
-     
-    
-    
-    
-    
-    /*
-     Book says to remove this section for without it there will always be a single section in the table view.
-     
-     // MARK: - Table view data source
-     
-     override func numberOfSections(in tableView: UITableView) -> Int {
-     // #warning Incomplete implementation, return the number of sections
-     return 0
-     }
-     */
-    
-
-    
-    //Implementing: tableView(_:cellForRowAt:) function.
-    
-    //Current error: Cannot find 'cellIdentifier' in scope
-    //Fixed by adding the const. let cellIdentifier = "ChecklistCell" to this class
-    
-
-    
- 
-    
-
-    
-
-    
-
     
     
     
@@ -234,65 +182,30 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         navigationController?.popViewController(animated: true)
     }
     
-    
+    //MARK: - Navigation Controller Delegates
+    /*
+    This method (assoc. with the navigation controller Delegate) check for key press in order to eventually record screen changes them for our user defaults.
+     */
+     
+     
+    func navigationController(
+      _ navigationController: UINavigationController,
+      willShow viewController: UIViewController,
+      animated: Bool ){
+          
+        //Check for button press.
+        if viewController === self {
+          UserDefaults.standard.set(-1, forKey: "ChecklistIndex")
+        }
+      }
     
     /*
-    
-    // MARK: - Data Saving
-    func documentsDirectory() -> URL {
-      let paths = FileManager.default.urls(
-        for: .documentDirectory,
-        in: .userDomainMask)
-      return paths[0]
-    }
-    
-    
-    func dataFilePath() -> URL {
-      return
-    documentsDirectory().appendingPathComponent("Checklists.plist")
-    }
-    
-    /*
-    func saveChecklists() {
-        let encoder = PropertyListEncoder()
-        do {
-            // You encode lists instead of "items"
-            let data = try encoder.encode(lists)
-            try data.write(
-                to: dataFilePath(),
-                options: Data.WritingOptions.atomic)
-        } catch {
-            print("Error encoding list array: \(error.localizedDescription)")
-        }
-        
-        // this method is now called loadChecklists()
-        func loadChecklists() {
-            let path = dataFilePath()
-            if let data = try? Data(contentsOf: path) {
-                let decoder = PropertyListDecoder()
-                do {
-                    // You decode to an object of [Checklist] type to lists
-                lists = try decoder.decode(
-                        [Checklist].self,
-                        from: data)
-                } catch {
-                    print("Error decoding list array: \(error.localizedDescription)")
-                }
-            }
-        }
-        */
-         
-         
-    
-              
-              
-    
-    
-    */
-    
-    
-    
-    
-    
+     A note on equal signs:
+     
+     =      one means, "is set to"
+     ==     two means, "this equates to this"
+     ===    three means "this is exactly that," and errors if not.
+     
+     */
     
 }
