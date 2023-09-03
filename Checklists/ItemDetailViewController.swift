@@ -87,15 +87,15 @@ class ItemDetailViewController: UITableViewController,                          
             item.text = textField.text!
             delegate?.itemDetailViewController(self, didFinishEditing: item)
       } else {
+          
           let item = ChecklistItem()
           item.text = textField.text!
           delegate?.itemDetailViewController(self, didFinishAdding: item)
       }
         
     }
-     
-     
-        
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -111,23 +111,6 @@ class ItemDetailViewController: UITableViewController,                          
           }
     }
     
-    // MARK: - Actions
-    
-    /*
-     @IBAction func cancel() {
-     navigationController?.popViewController(animated: true)
-     }
-     @IBAction func done() {
-     
-     //When done is pressed, this statement will collect text and print it to the console.
-     print("Contents of the text field: \(textField.text!)")
-     
-     navigationController?.popViewController(animated: true)
-     }
-     */
-    
-    
-    
     // MARK: - Table View Delegates
     //This function disable the grey highlight upon selection, in the add item field
     override func tableView(
@@ -137,21 +120,17 @@ class ItemDetailViewController: UITableViewController,                          
         return nil
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         textField.becomeFirstResponder()
     }
     
-    //For test only
-    /*
-    @IBAction func doneBarButton(_ sender: Any) {
-    }
-    */
+    
+ 
     
     
-    //Quote from book,"This is one of the UITextField delegate methods. It is invoked every time the user changes the text, whether by tapping on the keyboard or via cut/paste.
-    
-    // MARK: - Text Field Delegates
+    //MARK: - Text Field Delegates
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldText = textField.text!
         let stringRange = Range(range, in: oldText)!
@@ -169,11 +148,3 @@ class ItemDetailViewController: UITableViewController,                          
     
     
 }
-
-//Error:
-
-/*
- Thread 1: "-[Checklists.ItemDetailViewController doneBarButton:]: unrecognized selector sent to instance 0x7fc99b026680"
- 
- */
-

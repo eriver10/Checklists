@@ -9,6 +9,17 @@ import Foundation
 import UIKit
 
 
+
+protocol ListDetailViewControllerDelegate: AnyObject {
+  func listDetailViewControllerDidCancel(_ controller: ListDetailViewController)
+  func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist)
+  func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist)
+}
+
+/*
+
+//This one is mine.
+ 
 protocol ListDetailViewControllerDelegate: AnyObject {
   func listDetailViewControllerDidCancel(
     _ controller: ListDetailViewController)
@@ -21,6 +32,9 @@ protocol ListDetailViewControllerDelegate: AnyObject {
      didFinishEditing checklist: Checklist
    )
  }
+
+*/
+
 
 
 
@@ -47,9 +61,7 @@ protocol ListDetailViewControllerDelegate: AnyObject {
            didFinishEditing: checklist)
        } else {
          let checklist = Checklist(name: textField.text!)
-         delegate?.listDetailViewController(
-     self,
-           didFinishAdding: checklist)
+         delegate?.listDetailViewController(self, didFinishAdding: checklist)
        }
      }
      

@@ -7,7 +7,9 @@
 
 import UIKit
 
-class Checklist: NSObject {
+
+//Added Codable here to fix an error I ran into in last lesson. Just incase I miss it.
+class Checklist: NSObject, Codable {
     
     var name = ""
     var items = [ChecklistItem]()
