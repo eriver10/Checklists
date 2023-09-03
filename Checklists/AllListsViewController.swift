@@ -180,9 +180,25 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
         }
     }
-        
-        
+     
+    /*
+     This function uses view will appear instead of view did.
+     I will wait till after the view is initiated to update, or appear, to the display. Note: this only by a fraction of a second.
+     */
+     
+     
+    override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      tableView.reloadData()
+    }
     
+    /*
+     The book states the following:
+     
+     Here, viewWillAppear() tells the table view to reload its entire contents. That will cause tableView(_:cellForRowAt:) to be called again for every visible row. When you tap the back button on the ChecklistViewController’s navigation bar, the AllListsViewController screen will slide back into view. Just before that happens, viewWillAppear() is called.
+     Thanks to the call to tableView.reloadData() the app will update all of the table cells, including the detailTextLabels.
+     
+     */
     
     
     
