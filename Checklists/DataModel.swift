@@ -13,6 +13,8 @@ class DataModel {
     
     init() {
       loadChecklists()
+      //Note: we are calling this function to tell the app what the defaults should be at startup. (and avoid a crash with conflicting values)
+      registerDefaults()
     }
     
     
@@ -61,6 +63,14 @@ class DataModel {
       }
     }
     
-    
+    /*
+    We are setting a default to our opening page view in order to avoid a crash when no default user behaviors are recorded.
+        For this we are using the dictionary again.
+     */
+     
+    func registerDefaults() {
+      let dictionary = [ "ChecklistIndex": -1 ]
+      UserDefaults.standard.register(defaults: dictionary)
+    }
     
 }
