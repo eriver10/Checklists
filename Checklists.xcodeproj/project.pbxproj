@@ -70,17 +70,17 @@
 			children = (
 				383CFBBC2AA241E500AAFAF4 /* AllListsViewController.swift */,
 				383170902A948DAE0051E39B /* AppDelegate.swift */,
-				383170922A948DAE0051E39B /* SceneDelegate.swift */,
-				383170942A948DAE0051E39B /* ChecklistViewController.swift */,
-				383170962A948DAE0051E39B /* Main.storyboard */,
 				383170992A948DAF0051E39B /* Assets.xcassets */,
-				3831709B2A948DAF0051E39B /* LaunchScreen.storyboard */,
-				3831709E2A948DAF0051E39B /* Info.plist */,
-				38B4B0A12A97C34F00AF305D /* ItemDetailViewController.swift */,
 				383CFBBE2AA2562700AAFAF4 /* Checklist.swift */,
 				383170C42A966E0C0051E39B /* Checklistitem.swift */,
-				383CFBC02AA267A800AAFAF4 /* ListDetailViewController.swift */,
+				383170942A948DAE0051E39B /* ChecklistViewController.swift */,
 				3854E5152AA3F30300C3D282 /* DataModel.swift */,
+				3831709E2A948DAF0051E39B /* Info.plist */,
+				38B4B0A12A97C34F00AF305D /* ItemDetailViewController.swift */,
+				3831709B2A948DAF0051E39B /* LaunchScreen.storyboard */,
+				383CFBC02AA267A800AAFAF4 /* ListDetailViewController.swift */,
+				383170962A948DAE0051E39B /* Main.storyboard */,
+				383170922A948DAE0051E39B /* SceneDelegate.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";

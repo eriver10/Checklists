@@ -15,16 +15,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     var dataModel: DataModel!
     
     
-    //test over this is working fine now!!!
-    
     override func viewDidLoad() {
+
       super.viewDidLoad()
+    
       navigationController?.navigationBar.prefersLargeTitles = true
-      tableView.register(
-        UITableViewCell.self,
-        forCellReuseIdentifier: cellIdentifier)
-    // Load data
-      //loadChecklists()
+      tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
     
 
@@ -51,28 +47,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
             //tableView Section\\
     
-    override func tableView(_ tableView: UITableView,                              numberOfRowsInSection section: Int) -> Int {
-              
-        return dataModel.lists.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
+      return dataModel.lists.count
     }
     
-    override func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: cellIdentifier, for: indexPath)
-        
-        
-        //Updating Cell info.
-        let checklist = dataModel.lists[indexPath.row]
-        cell.textLabel!.text = checklist.name
-        cell.accessoryType = .detailDisclosureButton
-        
-        return cell
+      let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+      
+      let checklist = dataModel.lists[indexPath.row]
+      cell.textLabel!.text = checklist.name
+      cell.accessoryType = .detailDisclosureButton
+
+      return cell
     }
     
 
@@ -107,26 +95,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     
     
-    override func tableView(
-        _ tableView: UITableView,
-        didSelectRowAt indexPath: IndexPath
-    ){
-        dataModel.indexOfSelectedChecklist = indexPath.row
- 
-        UserDefaults.standard.set(
-            indexPath.row,
-            forKey: "ChecklistIndex")
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+      dataModel.indexOfSelectedChecklist = indexPath.row
+      
+        let checklist = dataModel.lists[indexPath.row]
+      performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
     
     
     
-    override func tableView(
-        _ tableView: UITableView,
-        commit editingStyle: UITableViewCell.EditingStyle,
-        forRowAt indexPath: IndexPath
-    ){
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
+        
         dataModel.lists.remove(at: indexPath.row)
+        
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
@@ -167,28 +149,22 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
       */
         
-        override func viewDidAppear(_ animated: Bool) {
-            
-          super.viewDidAppear(animated)
-            
-          navigationController?.delegate = self
-          
-          //Now pointing to selected checklist
-          let index = dataModel.indexOfSelectedChecklist
-         
-         //Defensive programming, changing "if" statement. If the program shuts down this logic will check for a value greater than or equal to zero and less than the size of our array.
-         // if index != -1 {
-            
-            //Note: first use of &&, and. || should be or, but haven't encountered it yet.
-            if index >= 0 && index < dataModel.lists.count {
-            let checklist = dataModel.lists[index]
-            performSegue(
-              withIdentifier: "ShowChecklist",
-              sender: checklist)
-          }
+    override func viewDidAppear(_ animated: Bool) {
         
+      super.viewDidAppear(animated)
+
+      navigationController?.delegate = self
+
+      let index = dataModel.indexOfSelectedChecklist
         
+        if index >= 0 && index < dataModel.lists.count {
+        let checklist = dataModel.lists[index]
+        performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
     }
+        
+        
+    
     
     
     
@@ -252,15 +228,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     */
     
     
-    func navigationController(
-      _ navigationController: UINavigationController,
-      willShow viewController: UIViewController,
-      animated: Bool ){
+    //MARK: - Navigation Controller Delegates
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
           
         //Check for button press.
         if viewController === self {
-        //now pointing to selected checklist
-            dataModel.indexOfSelectedChecklist = -1
+              dataModel.indexOfSelectedChecklist = -1
         }
       }
     

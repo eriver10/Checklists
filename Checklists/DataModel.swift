@@ -16,6 +16,8 @@ class DataModel {
       loadChecklists()
       //Note: we are calling this function to tell the app what the defaults should be at startup. (and avoid a crash with conflicting values)
       registerDefaults()
+      //Calling this function handles the first time experience logic.
+        handleFirstTime()
     }
     
     
@@ -69,10 +71,24 @@ class DataModel {
         For this we are using the dictionary again.
      */
      
+    /*
     func registerDefaults() {
       let dictionary = [ "ChecklistIndex": -1 ]
       UserDefaults.standard.register(defaults: dictionary)
     }
+    */
+    
+    
+    
+    //Changing this function in order to use add a "first time experiencet."
+    func registerDefaults() {
+        
+      let dictionary = ["ChecklistIndex": -1, "FirstTime": true] as        [String: Any]
+      UserDefaults.standard.register(defaults: dictionary)
+    }
+    
+    
+    
     
     //MARK: Computed Property
     
@@ -98,8 +114,19 @@ class DataModel {
         
     }
     
-    
-    
+    //Checking for user default values, if true then the first time experience runs its defaults instead of user collected defaults.
+    func handleFirstTime() {
+        
+      let userDefaults = UserDefaults.standard
+      let firstTime = userDefaults.bool(forKey: "FirstTime")
+      
+        if firstTime {
+        let checklist = Checklist(name: "List")
+        lists.append(checklist)
+        indexOfSelectedChecklist = 0
+        userDefaults.set(false, forKey: "FirstTime")
+      }
+    }
     
     
 }
