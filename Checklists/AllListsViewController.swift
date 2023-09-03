@@ -71,15 +71,26 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             reuseIdentifier: cellIdentifier)
         }
       
+        
+      //Sending updates
       let checklist = dataModel.lists[indexPath.row]
       cell.textLabel!.text = checklist.name
       cell.accessoryType = .detailDisclosureButton
         
       //In swift you are able to, "...call the countUncheckedItems() method on the Checklist object and put the count into a new string that you display using the detailTextLabel," says the book.
-      cell.detailTextLabel!.text = "\(checklist.countUncheckedItems())Remaining"
+        let count = checklist.countUncheckedItems()
+        
+        if checklist.items.count == 0 {
+          cell.detailTextLabel!.text = "(No Items)"
+        } else {
+          cell.detailTextLabel!.text = count == 0 ? "All Done" : "\(count) Remaining"
+        }
 
-      return cell
-    }
+        //cell.imageView!.image = UIImage(named: checklist.iconName)
+
+        return cell
+      }
+
     
 
     
