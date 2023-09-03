@@ -28,10 +28,15 @@ class Checklist: NSObject, Codable {
       super.init()
     }
     
-    /*
-     Note: similar to the "this." keyword "self." tells swift that self.name refers the variable within this class and not the variable piped in from the function.
-     
-     In other words, take this here and set it to that (this) that came from over there.
-     */
+    //This function probes our checked items and give total using a running total, the += in a for/in loop.
+    func countUncheckedItems() -> Int {
+        
+      var count = 0
+        
+      for item in items where !item.checked {
+    count += 1 }//This reads count+count = (new)count, rinse, lather, repeat.
+      
+        return count
+    }
     
 }

@@ -20,7 +20,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
       super.viewDidLoad()
     
       navigationController?.navigationBar.prefersLargeTitles = true
-      tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        
+      //tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        
+        
     }
     
 
@@ -54,11 +57,26 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-      let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+      //let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        
+        //Get cell and logic to determine there is a cached cell.
+        let cell: UITableViewCell!
+        
+        if let tmp = tableView.dequeueReusableCell(
+          withIdentifier: cellIdentifier) {
+          cell = tmp
+        } else {
+          cell = UITableViewCell(
+            style: .subtitle,
+            reuseIdentifier: cellIdentifier)
+        }
       
       let checklist = dataModel.lists[indexPath.row]
       cell.textLabel!.text = checklist.name
       cell.accessoryType = .detailDisclosureButton
+        
+      //In swift you are able to, "...call the countUncheckedItems() method on the Checklist object and put the count into a new string that you display using the detailTextLabel," says the book.
+      cell.detailTextLabel!.text = "\(checklist.countUncheckedItems())Remaining"
 
       return cell
     }
