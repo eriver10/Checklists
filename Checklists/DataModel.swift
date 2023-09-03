@@ -10,6 +10,7 @@ import Foundation
 class DataModel {
     
   var lists = [Checklist]()
+  
     
     init() {
       loadChecklists()
@@ -72,5 +73,33 @@ class DataModel {
       let dictionary = [ "ChecklistIndex": -1 ]
       UserDefaults.standard.register(defaults: dictionary)
     }
+    
+    //MARK: Computed Property
+    
+    //... This style is new.. var typing a function??
+    
+    /*
+     "This is an example of a computed property," the book responds;
+     
+     "There isn’t any storage allocated for this property — so it’s not really a variable. Instead, when the app tries to read the value of indexOfSelectedChecklist, the code in the get block is performed. And when the app tries to put a new value into indexOfSelectedChecklist, the set block is performed.
+     From now on, you can simply use indexOfSelectedChecklist and it will automatically update UserDefaults. How cool is that?"
+     
+     */
+    
+    var indexOfSelectedChecklist: Int {
+      get {
+        return UserDefaults.standard.integer(
+          forKey: "ChecklistIndex")
+    } set {
+        UserDefaults.standard.set(
+          newValue,
+          forKey: "ChecklistIndex")
+        }
+        
+    }
+    
+    
+    
+    
     
 }

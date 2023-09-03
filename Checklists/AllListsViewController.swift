@@ -76,6 +76,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
 
+    
+    /*
+     
+          
     override func tableView(
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
@@ -98,6 +102,24 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
          
         */
     }
+    
+    */
+    
+    
+    
+    override func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ){
+        dataModel.indexOfSelectedChecklist = indexPath.row
+ 
+        UserDefaults.standard.set(
+            indexPath.row,
+            forKey: "ChecklistIndex")
+        
+    }
+    
+    
     
     override func tableView(
         _ tableView: UITableView,
@@ -127,6 +149,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     
+    
+    
+    /*
     //After collecting user behavior, and at the next startup, this function will invoke/display the recored defaults, or in-other-words, show the last list used.
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(animated)
@@ -139,6 +164,30 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
           withIdentifier: "ShowChecklist",
           sender: checklist)
       }
+        
+      */
+        
+        override func viewDidAppear(_ animated: Bool) {
+            
+          super.viewDidAppear(animated)
+            
+          navigationController?.delegate = self
+          
+          //Now pointing to selected checklist
+          let index = dataModel.indexOfSelectedChecklist
+         
+         //Defensive programming, changing "if" statement. If the program shuts down this logic will check for a value greater than or equal to zero and less than the size of our array.
+         // if index != -1 {
+            
+            //Note: first use of &&, and. || should be or, but haven't encountered it yet.
+            if index >= 0 && index < dataModel.lists.count {
+            let checklist = dataModel.lists[index]
+            performSegue(
+              withIdentifier: "ShowChecklist",
+              sender: checklist)
+          }
+        
+        
     }
     
     
@@ -187,7 +236,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     This method (assoc. with the navigation controller Delegate) check for key press in order to eventually record screen changes them for our user defaults.
      */
      
-     
+     /*
+      
+      
     func navigationController(
       _ navigationController: UINavigationController,
       willShow viewController: UIViewController,
@@ -198,6 +249,21 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
           UserDefaults.standard.set(-1, forKey: "ChecklistIndex")
         }
       }
+    */
+    
+    
+    func navigationController(
+      _ navigationController: UINavigationController,
+      willShow viewController: UIViewController,
+      animated: Bool ){
+          
+        //Check for button press.
+        if viewController === self {
+        //now pointing to selected checklist
+            dataModel.indexOfSelectedChecklist = -1
+        }
+      }
+    
     
     /*
      A note on equal signs:
