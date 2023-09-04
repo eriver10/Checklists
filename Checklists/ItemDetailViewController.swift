@@ -8,7 +8,8 @@
 
 
 import UIKit
-
+//Incase needed.
+//import UserNotifications
 
 protocol ItemDetailViewControllerDelegate: AnyObject {
     
@@ -45,17 +46,49 @@ class ItemDetailViewController: UITableViewController,                          
     @IBAction func done() {
         
       if let item = itemToEdit {
+          
         item.text = textField.text!
-        delegate?.itemDetailViewController(self, didFinishEditing: item)
+        
+        item.shouldRemind = shouldRemindSwitch.isOn
+        item.dueDate = datePicker.date
+        
+          item.scheduleNotification()
+                  
+          delegate?.itemDetailViewController(self, didFinishEditing: item)
       } else {
+        
         let item = ChecklistItem()
         item.text = textField.text!
-        delegate?.itemDetailViewController(self, didFinishAdding: item)
+        item.checked = false
+        
+        item.shouldRemind = shouldRemindSwitch.isOn
+        item.dueDate = datePicker.date
+        
+          item.scheduleNotification()
+        
+          delegate?.itemDetailViewController(self, didFinishAdding: item)
       }
     }
     
 
-
+    @IBAction func shouldRemindToggled(_ switchControl: UISwitch) {
+        
+      textField.resignFirstResponder()
+      
+        if switchControl.isOn {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) {_, _
+    in
+         //Does nothing
+      }
+    }
+   }
+    
+    
+    
+    
+    
+    
 
         //viewDidLoad\\
     override func viewDidLoad() {
@@ -67,7 +100,13 @@ class ItemDetailViewController: UITableViewController,                          
       title = "Edit Item"
       textField.text = item.text
       doneBarButton.isEnabled = true
+      
+        shouldRemindSwitch.isOn = item.shouldRemind
+        datePicker.date = item.dueDate
+          
     }
+        
+  
   }
 
   override func viewWillAppear(_ animated: Bool) {
