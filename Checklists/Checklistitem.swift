@@ -14,5 +14,18 @@ import Foundation
  class ChecklistItem: NSObject, Codable{
   var text = ""
   var checked = false
+  var dueDate = Date()
+  var shouldRemind = false
+  var itemID = -1
+     
+ //A way to ask for new item ID at start.
+     override init() {
+         
+         super.init()
+         
+         itemID = DataModel.nextChecklistItemID()
+         
+     }
+     
 }
 

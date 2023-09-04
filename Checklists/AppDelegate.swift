@@ -6,42 +6,46 @@
 //
 
 import UIKit
+//Starting, get permissions to display local notifications
+import UserNotifications
+
+
+
+
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Local notifications
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        
         return true
+            
+        }
+        
+        // MARK: UISceneSession Lifecycle
+        
+        func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+            // Called when a new scene session is being created.
+            // Use this method to select a configuration to create the new scene with.
+            return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        }
+        
+        func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+        }
+        
+    // MARK: - User Notification Delegates
+    func userNotificationCenter(
+      _ center: UNUserNotificationCenter,
+      willPresent notification: UNNotification,
+      withCompletionHandler completionHandler: @escaping
+    (UNNotificationPresentationOptions) -> Void ){
+      print("Received local notification \(notification)")
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-      // Called when a new scene session is being created.
-      // Use this method to select a configuration to create the new scene with.
-      return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-    }
-
-
-    
- /*
- Notes from book for my own use later
- 
- the easiest approach:
- 
- 1. Add a prototype cell to the table view in the storyboard.
- 2. Set a reuse identifier on the prototype cell.
- 3. Call tableView.dequeueReusableCell(withIdentifier:for:). This makes a new copy of the prototype cell if necessary, or, recycles an existing cell that is no longer in use.
- 
- Once you have a cell, you should set it up with the data from the corresponding row and give it back to the table view.
- */
-    
     
 }
-

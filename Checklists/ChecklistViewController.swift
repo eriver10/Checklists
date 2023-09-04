@@ -102,8 +102,12 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
 
      func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
        
+         //#########Temporary Changes #####################\\
+         
+         
          let label = cell.viewWithTag(1000) as! UILabel
-         label.text = item.text
+         //label.text = item.text
+         label.text = "\(item.itemID): \(item.text)"
      }
 
     

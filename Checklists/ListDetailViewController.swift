@@ -17,12 +17,22 @@ protocol ListDetailViewControllerDelegate: AnyObject {
 
 class ListDetailViewController: UITableViewController, UITextFieldDelegate, IconPickerViewControllerDelegate {
 
-    @IBOutlet weak var iconImage: UIImageView!
     
   var checklistToEdit: Checklist?
   var iconName = "Folder"
   weak var delegate: ListDetailViewControllerDelegate?
+ 
 
+    
+    
+    
+  @IBOutlet weak var iconImage: UIImageView!
+  
+    @IBAction func RemindMe(_ sender: Any) {
+    }
+    
+    
+  
   @IBOutlet weak var textField: UITextField!
   //@IBOutlet weak var iconImage: UIImageView!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
@@ -46,6 +56,9 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
     }
   }
 
+    
+    
+    
             //viewDidLoad\\
   override func viewDidLoad() {
       

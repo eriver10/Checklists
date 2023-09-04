@@ -98,7 +98,29 @@ class DataModel {
       return list1.name.localizedStandardCompare(list2.name) == .orderedAscending
     }
   }
-
+ 
+    /*
+     The class keyword before the method indicates a Class Method.
+     
+     The book says," ...this kind of method applies to the class as a whole. ...the word func — without class, works " only on a specific instance of that class."
+     
+     And then goes on to say, "For now, just remember that a method starting with class func allows you to call methods on an object even when you don’t have a reference to that object."
+     
+     Is this a sneaky way of getting around scopes??
+     
+     */
+    
+    class func nextChecklistItemID() -> Int {
+        
+      let userDefaults = UserDefaults.standard
+      let itemID = userDefaults.integer(forKey: "ChecklistItemID")
+      userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+      
+        return itemID
+    }
     
     
 }
+
+
+
