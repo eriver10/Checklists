@@ -106,8 +106,9 @@ class ChecklistViewController: UITableViewController,                 ItemDetail
          
          
          let label = cell.viewWithTag(1000) as! UILabel
-         //label.text = item.text
-         label.text = "\(item.itemID): \(item.text)"
+         //Put this one back after IDs for testing weren't needed.
+         label.text = item.text
+         //label.text = "\(item.itemID): \(item.text)"
      }
 
     
